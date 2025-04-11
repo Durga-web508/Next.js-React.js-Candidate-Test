@@ -1,0 +1,117 @@
+use client';
+
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+interface FiltersProps {
+  filters: {
+    brand: string;
+    price: string;
+    fuel: string;
+    seats: string;
+  };
+  setFilters: (filters: any) => void;
+}
+
+export function CarFilters({ filters, setFilters }: FiltersProps) {
+  const brands = ['Toyota', 'Honda', 'Ford', 'BMW', 'Mercedes'];
+  const priceRanges = [
+    '0-20000',
+    '20000-40000',
+    '40000-60000',
+    '60000-80000',
+    '80000-100000',
+  ];
+  const fuelTypes = ['Gasoline', 'Diesel', 'Electric', 'Hybrid'];
+  const seatOptions = ['2', '4', '5', '7', '8'];
+
+  return (
+    <Card className="w-full lg:w-72">
+      <CardHeader>
+        <CardTitle>Filters</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="brand">Brand</Label>
+          <Select
+            value={filters.brand}
+            onValueChange={(value) => setFilters({ ...filters, brand: value })}
+          >
+            <SelectTrigger id="brand">
+              <SelectValue placeholder="Select brand" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All brands</SelectItem>
+              {brands.map((brand) => (
+                <SelectItem key={brand} value={brand}>
+                  {brand}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="price">Price Range</Label>
+          <Select
+            value={filters.price}
+            onValueChange={(value) => setFilters({ ...filters, price: value })}
+          >
+            <SelectTrigger id="price">
+              <SelectValue placeholder="Select price range" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All prices</SelectItem>
+              {priceRanges.map((range) => (
+                <SelectItem key={range} value={range}>
+                  ${range.split('-')[0]} - ${range.split('-')[1]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="fuel">Fuel Type</Label>
+          <Select
+            value={filters.fuel}
+            onValueChange={(value) => setFilters({ ...filters, fuel: value })}
+          >
+            <SelectTrigger id="fuel">
+              <SelectValue placeholder="Select fuel type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All fuel types</SelectItem>
+              {fuelTypes.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="seats">Seats</Label>
+          <Select
+            value={filters.seats}
+            onValueChange={(value) => setFilters({ ...filters, seats: value })}
+          >
+            <SelectTrigger id="seats">
+              <SelectValue placeholder="Select seats" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All seats</SelectItem>
+              {seatOptions.map((seats) => (
+                <SelectItem key={seats} value={seats}>
+                  {seats} seats
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
